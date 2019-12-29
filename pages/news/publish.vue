@@ -1,28 +1,27 @@
 <template>
-    <view class="page">
-        <view class="feedback-body" >
-            <textarea placeholder="请输入..." style="border-bottom:1px solid   #F1F1F3;" v-model="sendDate.content" class="feedback-textare" />
-        </view>
+	<view class="uni-page-body">
+		<view class="feedback-body">
+			<input class="feedback-input" v-model="sendDate.contact" placeholder="日记的标题是…" />
+		</view>
+		<view class='feedback-title feedback-star-view'>
+			<text>今日心情</text>
+			<view class="feedback-star-view">
+				<text class="feedback-star" v-for="(value,key) in stars" :key="key" :class="key < sendDate.score ? 'active' : ''"
+				 @tap="chooseStar(value)"></text>
+			</view>
+		</view>
+		<view class="feedback-body">
+			<textarea placeholder="请输入…" v-model="sendDate.content" class="feedback-textare" />
+			</view>
+
         <choose :count="count"  :imgList="imgList"  @changes="fileChange"></choose>
         <compress  ref="compress" :maxwh="maxwh" :quality="quality" > </compress>
 
 
         <view class="swiper-list">
             <view class="uni-list-cell uni-list-cell-pd feedback-title">
-                <view class="uni-list-cell-db ">图片是否压缩</view>
+                <view class="uni-list-cell-db ">压缩图片</view>
                 <switch :checked="isYasuo" @change="changeIndicatorDots" />
-            </view>
-        </view>
-        <view class='feedback-title'>
-            <text>QQ/邮箱</text>
-        </view>
-        <view class="feedback-body">
-            <input class="feedback-input" v-model="sendDate.contact" placeholder="(选填,方便我们联系你 )" />
-        </view>
-        <view class='feedback-title feedback-star-view'>
-            <text>插件评分</text>
-            <view class="feedback-star-view">
-                <text class="feedback-star" v-for="(value,key) in stars" :key="key" :class="key < sendDate.score ? 'active' : ''" @tap="chooseStar(value)"></text>
             </view>
         </view>
         <button type="default" class="feedback-submit" @tap="send">提交</button>
@@ -42,7 +41,7 @@
         data() {
             return {
                 isYasuo:true,
-                count:6,
+                count:9,
                 maxwh:280,
                 quality:1, 
                 
@@ -152,14 +151,5 @@
 </script>
 
 <style>
-    page {
-        background-color: #EFEFF4;
-    }
-
-    .input-view {
-        font-size: 28upx;
-    }
-    .close-view{
-        text-align: center;line-height:14px;height: 16px;width: 16px;border-radius: 50%;background: #FF5053;color: #FFFFFF;position: absolute;top: -6px;right: -4px;font-size: 12px;
-    }
+	@import "../../common/uni.css";
 </style>

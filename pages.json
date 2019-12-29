@@ -1,22 +1,21 @@
 {
     "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
         {
+            "path": "pages/news/publish",
+            "style": {
+                "navigationBarTitleText": "写日记"
+            }
+        }, {
             "path": "pages/news/list",
             "style": {
-                "navigationBarTitleText": "新闻"
+                "navigationBarTitleText": "发现"
             }
         }, {
             "path": "pages/news/detail",
             "style": {
-                "navigationBarTitleText": "新闻详情"
+                "navigationBarTitleText": "日记详情"
             }
-        }, {
-            "path": "pages/news/publish",
-            "style": {
-                "navigationBarTitleText": "发布新闻"
-            }
-        },
-        {
+        },  {
             "path": "pages/index/index",
             "style": {
                 "navigationBarTitleText": "uni-app"
@@ -33,15 +32,15 @@
         "selectedColor": "#0faeff",
         "backgroundColor": "#ffffff",
         "list": [{
-            "pagePath": "pages/news/list",
-            "text": "新闻",
-            "iconPath": "static/img/faxian.png",
-            "selectedIconPath": "static/img/faxianHL.png"
-        }, {
             "pagePath": "pages/news/publish",
-            "text": "发布",
+            "text": "日记",
             "iconPath": "static/img/fabu.png",
             "selectedIconPath": "static/img/fabuHL.png"
+        },{
+            "pagePath": "pages/news/list",
+            "text": "发现",
+            "iconPath": "static/img/faxian.png",
+            "selectedIconPath": "static/img/faxianHL.png"
         }]
     }
 }
