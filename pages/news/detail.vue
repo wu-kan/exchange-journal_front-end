@@ -1,23 +1,23 @@
 <template>
     <view>
-        <view class="banner">
-            <image mode="aspectFill" class="banner-img" :src="banner.image_url"></image>
-            <view class="banner-title">{{banner.title}}</view>
-        </view>
-        <view class="article-meta">
-            <text class="article-author">{{banner.nickname}}</text>
-            <text class="article-text">发表于</text>
-            <text class="article-time">{{banner.datetime}}</text>
-        </view>
+		<view class="article-meta">
+		    <text class="article-author">{{banner.nickname}}</text>
+		    <text class="article-text">TA的日记</text>
+		    <text class="article-time">{{banner.datetime}}</text>
+		</view>
+		
+		<view class="article-content">
+		   
+		</view>
+		<view class="" style="padding: 30upx;">
+		    <image v-for="(img,idx) in banner.news_image" :key="idx" mode="aspectFill" class="banner-img" :src="img.src"></image>
+		</view>
+		<view class="comment-wrap"></view>
+		<comments :comments="comments"></comments>
+		
 
-        <view class="article-content">
-            <rich-text :nodes="content"></rich-text>
-        </view>
-        <view class="" style="padding: 30upx;">
-            <image v-for="(img,idx) in banner.news_image" :key="idx" mode="aspectFill" class="banner-img" :src="img.src"></image>
-        </view>
-        <view class="comment-wrap"></view>
-        <comments :comments="comments"></comments>
+
+        
     </view>
 </template>
 
