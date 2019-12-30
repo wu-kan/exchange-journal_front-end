@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "写日记",
+  "usingComponents": {
+    "choose": "/components/template/image/choose",
+    "compress": "/components/template/image/compress"
+  }
+}

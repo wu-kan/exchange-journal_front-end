@@ -20,7 +20,17 @@
             "style": {
                 "navigationBarTitleText": "uni-app"
             }
-        }
+        }, {
+			"path": "pages/login/login",
+			"style": {
+			    "navigationBarTitleText": "登录"
+			}
+		},{
+			"path": "pages/login/register",
+			"style": {
+			    "navigationBarTitleText": "注册"
+			}
+		}
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",
@@ -32,15 +42,24 @@
         "selectedColor": "#0faeff",
         "backgroundColor": "#ffffff",
         "list": [{
-            "pagePath": "pages/news/publish",
-            "text": "日记",
-            "iconPath": "static/img/fabu.png",
-            "selectedIconPath": "static/img/fabuHL.png"
-        },{
             "pagePath": "pages/news/list",
             "text": "发现",
             "iconPath": "static/img/faxian.png",
             "selectedIconPath": "static/img/faxianHL.png"
-        }]
+        },{
+            "pagePath": "pages/news/publish",
+            "text": "日记",
+            "iconPath": "static/img/fabu.png",
+            "selectedIconPath": "static/img/fabuHL.png"
+        },
+		{
+		    "pagePath": "pages/news/detail",
+		    "text": "我的",
+		    "iconPath": "static/img/my.png",
+		    "selectedIconPath": "static/img/myHL.png"
+		}
+		
+		
+		]
     }
 }

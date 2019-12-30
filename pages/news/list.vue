@@ -1,338 +1,296 @@
 <template>
-    <view class="uni-tab-bar">
-        <scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="scrollLeft">
-            <view v-for="(tab, index) in tabBars" :key="tab.ref" :class="['swiper-tab-list',tabIndex==index ? 'active' : '']"
-                :id="tab.ref" :data-current="index" @click="tapTab(index,tab)">{{tab.name}}</view>
-        </scroll-view>
-        <!-- #ifndef MP-BAIDU -->
-        <scroll-view class="list" v-for="(tabItem, idx) in newsList" :key="tabItem.id" v-if="tabIndex === idx" scroll-y
-            @scrolltolower="loadMore(idx)">
-            <block v-for="(newsItem, newsIndex) in tabItem.data" :key="newsItem.id">
-                <uni-media-list :options="newsItem" @close="dislike(idx, newsIndex)" @click="goDetail(newsItem)"></uni-media-list>
-            </block>
-            <view class="uni-tab-bar-loading">
-                <view class="loading-more">{{loadingText}}</view>
-            </view>
-        </scroll-view>
-        <!-- #endif -->
-        <!-- #ifdef MP-BAIDU -->
-        <view class="scroll-wrap" v-for="(tabItem, idx) in newsList" :key="idx">
-            <scroll-view class="list" v-if="tabIndex === idx" scroll-y @scrolltolower="loadMore(idx)" :style="scrollViewHeight">
-                <block v-for="(newsItem, newsIndex) in tabItem.data" :key="newsIndex">
-                    <uni-media-list :options="newsItem" @close="dislike(idx, newsIndex)" @click="goDetail(newsItem)"></uni-media-list>
-                </block>
-                <view class="uni-tab-bar-loading">
-                    <view class="loading-more">{{loadingText}}</view>
-                </view>
-            </scroll-view>
-        </view>
-        <!-- #endif -->
-    </view>
+	<view class="container">
+		
+		
+		<view class="search">
+			<!--<image src="../../static/zy-search/voice.svg" mode="aspectFit" @click="startRecognize()" class="voice-icon"></image> -->
+			<input maxlength="20" focus type="text" value="" confirm-type="search" @confirm="get_diary" placeholder="输入关键字" v-model.trim="searchText"/>
+			<image src="../../static/zy-search/search.svg" mode="aspectFit" @click="getname_link()" class="search-icon"></image>
+		</view>
+		{{straghtline}}
+		<view class="list-view">
+			<view v-for="(item,index) in newsList" :key="index" class="list-cell list-item" :class="[(newsList.length-1)==index?'last':'']"
+			 hover-class="hover" :hover-stay-time="150" @tap="detail">
+				<view class="cell-title-box" :class="[item.img==0?'':'min']">
+					<view class="cell-title" :class="[item.img==0?'pdr0':'']">{{item.title}}</view>
+					<image :src="'../../static/images/product/'+item.img+'.jpg'" class="img" v-if="item.img!=0"></image>
+				</view>
+				<view class="sub-title">
+					<text class="tag" :class="[getLabelCss(item.label)]" v-if="item.label!=0">{{getLabelText(item.label)}}</text>
+					<text class="sub-content">{{item.source}}</text>
+				</view>
+			</view>
+
+		</view>
+		<!--加载loadding-->
+		<tui-loadmore :visible="loadding"></tui-loadmore>
+		<tui-nomore :visible="!pullUpOn"></tui-nomore>
+		<!--加载loadding-->
+	</view>
 </template>
+
 <script>
-    import Request from '../../request/index.js'
-    import uniMediaList from '@/components/uni-media-list/uni-media-list.vue';
-    import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
-    import {
-        Time
-    } from '../../common/yc_js/index.js';
+	import tuiLoadmore from "@/components/loadmore/loadmore"
+	import tuiNomore from "@/components/nomore/nomore"
+	export default {
+		components: {
+			tuiLoadmore,
+			tuiNomore
+		},
+		data() {
+			return {
+				straghtline: '--------------------------------------------------------',
+				pageIndex: 1,
+				newsList: [{
+					title: '今日开心',
+					img: 0,
+					source: "今天受到了同学的赞赏，真的超级开心，不知道你过度怎么样？",
+					label: 0
+				}, {
+					title: '好多DDL',
+					img: 0,
+					source: "为什么有那么多的作业要去写呀，真的做不完了，\n 不知道你怎么样？",
+					label: 0
+				},{
+					title: '多向往多漫长',
+					img: 0,
+					source: "我多想能多陪你一场，把前半生的事迹跟你讲",
+					label: 0
+					
+				},
+				{
+					title: '今日开心',
+					img: 0,
+					source: "今天受到了同学的赞赏，真的超级开心，不知道你过度怎么样？",
+					label: 0
+				}, {
+					title: '好多DDL',
+					img: 0,
+					source: "为什么有那么多的作业要去写呀，真的做不完了，\n 不知道你怎么样？",
+					label: 0
+				},{
+					title: '多向往多漫长',
+					img: 0,
+					source: "我多想能多陪你一场，把前半生的事迹跟你讲",
+					label: 0
+					
+				},
+				{
+					title: '今日开心',
+					img: 0,
+					source: "今天受到了同学的赞赏，真的超级开心，不知道你过度怎么样？",
+					label: 0
+				}, {
+					title: '好多DDL',
+					img: 0,
+					source: "为什么有那么多的作业要去写呀，真的做不完了，\n 不知道你怎么样？",
+					label: 0
+				},{
+					title: '多向往多漫长',
+					img: 0,
+					source: "我多想能多陪你一场，把前半生的事迹跟你讲",
+					label: 0
+					
+				},
+				{
+					title: '今日开心',
+					img: 0,
+					source: "今天受到了同学的赞赏，真的超级开心，不知道你过度怎么样？",
+					label: 0
+				}, {
+					title: '好多DDL',
+					img: 0,
+					source: "为什么有那么多的作业要去写呀，真的做不完了，\n 不知道你怎么样？",
+					label: 0
+				},{
+					title: '多向往多漫长',
+					img: 0,
+					source: "我多想能多陪你一场，把前半生的事迹跟你讲",
+					label: 0
+					
+				},
+				],
+				loadData: [{
+					title: '今日开心',
+					img: 0,
+					source: "今天受到了同学的赞赏，真的超级开心，不知道你过度怎么样？",
+					label: 0
+				}, {
+					title: '好多DDL',
+					img: 0,
+					source: "为什么有那么多的作业要去写呀，真的做不完了，\n 不知道你怎么样？",
+					label: 0
+				},
+				],
+				loadding: false,
+				pullUpOn: true
+			}
+		},
+		methods: {
+			detail(e) {
+				uni.navigateTo({
+					url: '../extend-view/newsDetail/newsDetail'
+				})
+			},
+			getLabelText: function(label) {
+				return ["", "要闻", "朋友都看过", "本地资讯", "互联网精英看过"][label];
+			},
+			getLabelCss: function(label) {
+				return ["", "b-red", "b-blue", "b-orange", "b-green"][label];
+			},
+			
+			get_diary: function(label){
+				return [" "];
+			},
+			
+			
+			
+			
+		},
+		//页面相关事件处理函数--监听用户下拉动作
+		onPullDownRefresh: function() {
+			//延时为了看效果
+			setTimeout(() => {
+				this.newsList = this.loadData;
+				this.pageIndex = 1;
+				this.pullUpOn = true;
+				this.loadding = false;
+				uni.stopPullDownRefresh();
+				this.tui.toast("刷新成功");
+			}, 200)
+		},
 
-
-    export default {
-        components: {
-            uniMediaList,
-            uniLoadMore
-        },
-        data() {
-            return {
-                loadingText: {
-                    contentdown: '上拉加载更多',
-                    contentrefresh: '正在加载...',
-                    contentnomore: '没有更多数据了'
-                },
-                scrollLeft: 0,
-                refreshing: false,
-                refreshText: '下拉可以刷新',
-                newsList: [],
-                tabIndex: 0,
-                tabBars: [
-                    {
-                        name: '推荐',
-                        id: 0,
-                        ref: 'new'
-                    }, {
-                        name: '附近',
-                        id: 23,
-                        ref: 'company'
-                    }, {
-                        name: '最新',
-                        id: 223,
-                        ref: 'content'
-                    },
-                    {
-                        name: '消费',
-                        id: 221,
-                        ref: 'xiaofei'
-                    }, {
-                        name: '娱乐',
-                        id: 225,
-                        ref: 'yule'
-                    }, {
-                        name: '区块链',
-                        id: 208,
-                        ref: 'qukuailian'
-                    }
-                ]
-            }
-        },
-        computed: {
-            scrollViewHeight() {
-                return 'height:' + (uni.getSystemInfoSync().windowHeight) + 'px';
-            }
-        },
-        onLoad: function() {
-            var that = this;
-            // 初始化列表信息
-            // var tabBars = result.data.data;
-            // that.tabBars = tabBars;
-            that.tabBars.forEach((tabBar, index) => {
-                that.newsList.push({
-                    // name: '区块链',
-                    // id: 208,
-                    ref: tabBar.name,
-                    // id: 'tabBar' + index,
-                    data: [],
-                    requestParams: {
-                        category_id: tabBar.id,
-                        minId: 0,
-                        pageSize: 10,
-                        column: 'id,post_id,title,author_name,cover,published_at,comments_count'
-                    },
-                    loadingText: '加载中...'
-                });
-            })
-
-            that.getList(0);
-
-        },
-        methods: {
-            getList(action = 1) {
-                let activeTab = this.newsList[this.tabIndex];
-                activeTab.requestParams.time = new Date().getTime() + '';
-
-                if (action == 0) {
-                    activeTab.requestParams.category_id = 17;
-                } else if (action === 1) {
-
-                    activeTab.requestParams.minId = 0;
-                }
-                console.log(activeTab.requestParams)
-                this.loadingText = '加载中...';
-                Request('News_list', {
-                    data: activeTab.requestParams,
-                    // responseType: 'arraybuffer',
-                }).then(result => {
-
-                    console.log(JSON.stringify(result.data.data))
-                    if (result.statusCode == 200) {
-
-                        const data = result.data.data.map((news) => {
-                            return {
-                                id: news.id,
-                                article_type: 1,
-                                datetime: Time.dateTimeformat(news.create_time, "mm/dd hh:MM"),
-                                // datetime: friendlyDate(new Date(news.published_at.replace(/\-/g, '/')).getTime()),
-                                title: news.title + " | " + news.abstract,
-                                image_url: this.$config.getFileUrl(news.image) + "",
-                                // image_url:this.$config.getFileUrl(news.image)+"@min",
-                                // image_url: news.cover,
-                                source: news.author_name,
-                                comment_count: news.comment,
-                                post_id: news.post_id
-                            };
-                        });
-                        if (action === 1) {
-                            activeTab.data = data;
-                            this.refreshing = false;
-                        } else {
-                            data.forEach((news) => {
-                                activeTab.data.push(news);
-                            });
-                        }
-                        if (data.length) {
-                            this.loadingText = '';
-                            activeTab.requestParams.minId = data[data.length - 1].id;
-                            if (data.length < 10) {
-                                this.loadingText = '没有更多数据';
-                            }
-                        } else {
-                            this.loadingText = '没有更多数据';
-                        }
-
-                    } else {
-                        this.loadingText = '没有更多数据';
-                        this.refreshing = false;
-                    }
-                })
-
-            },
-            goDetail(detail) {
-                detail.nickname='匿名';
-                // console.log(JSON.stringify(detail))
-                uni.navigateTo({
-                    url: '/pages/news/detail?query=' + encodeURIComponent(JSON.stringify(detail))
-                });
-            },
-            dislike(tabIndex, newsIndex) {
-                uni.showModal({
-                    content: '不感兴趣？',
-                    success: (res) => {
-                        if (res.confirm) {
-                            this.newsList[tabIndex].data.splice(newsIndex, 1);
-                        }
-                    }
-                })
-            },
-            loadMore() {
-                this.getList(2);
-            },
-            async changeTab(event) {
-                let index = event.detail.current;
-                if (this.isClickChange) {
-                    this.tabIndex = index;
-                    this.isClickChange = false;
-                    return;
-                }
-                let tabBar = await this.getElSize('tab-bar');
-                let tabBarScrollLeft = tabBar.scrollLeft;
-                let width = 0;
-
-                for (let i = 0; i < index; i++) {
-                    let result = await this.getElSize(this.tabBars[i].ref);
-                    width += result.width;
-                }
-                let winWidth = uni.getSystemInfoSync().windowWidth,
-                    nowElement = await this.getElSize(this.tabBars[index].ref),
-                    nowWidth = nowElement.width;
-                if (width + nowWidth - tabBarScrollLeft > winWidth) {
-                    this.scrollLeft = width + nowWidth - winWidth;
-                }
-                if (width < tabBarScrollLeft) {
-                    this.scrollLeft = width;
-                }
-                this.isClickChange = false;
-                this.tabIndex = index;
-
-                // 首次切换后加载数据
-                const activeTab = this.newsList[this.tabIndex];
-                if (activeTab.data.length === 0) {
-                    this.getList();
-                }
-            },
-            getNodeSize(node) {
-                return new Promise((resolve, reject) => {
-                    dom.getComponentRect(node, (result) => {
-                        resolve(result.size);
-                    });
-                });
-            },
-            onRefresh(event) {
-                this.refreshText = '正在刷新...';
-                this.refreshing = true;
-                this.getList();
-            },
-            getElSize(id) { //得到元素的size
-                return new Promise((res, rej) => {
-                    uni.createSelectorQuery().select('#' + id).fields({
-                        size: true,
-                        scrollOffset: true
-                    }, (data) => {
-                        res(data);
-                    }).exec();
-                });
-            },
-            async tapTab(index, tab) {
-                //点击tab-bar
-                if (tab && tab.ref == 'publish') {
-                    // console.log(tab)
-                    uni.navigateTo({
-                        url:'/pages/news/'+tab.ref,
-                        // url: '/pages/news/detail?query=' + encodeURIComponent(JSON.stringify(detail))
-                    });
-                } else {
-                    if (this.tabIndex === index) {
-                        return false;
-                    } else {
-                        this.tabIndex = index;
-                        // 首次切换后加载数据
-                        const activeTab = this.newsList[this.tabIndex];
-                        if (activeTab.data.length === 0) {
-                            this.getList();
-                        }
-                    }
-                }
-            }
-        }
-    }
+		// 页面上拉触底事件的处理函数
+		onReachBottom: function() {
+			if (!this.pullUpOn) return;
+			this.loadding = true;
+			if (this.pageIndex == 3) {
+				this.loadding = false;
+				this.pullUpOn = false;
+			} else {
+				this.newsList = this.newsList.concat(this.loadData);
+				this.pageIndex = this.pageIndex + 1;
+			}
+		}
+	}
 </script>
+
 <style>
-    page {
-        /* background-color: #999; */
-        height: 100%;
-        font-size: 11px;
-        line-height: 1.8;
-    }
+	
+	
+	.container {
+		padding-bottom: env(safe-area-inset-bottom);
+	}
+	.search-icon{
+		width: 36upx;
+		height: 36upx;
+		padding: 16upx 20upx 16upx 0;
+		position: absolute;
+		right: 0;
+		top: -2upx;
+		z-index: 10;
+	}
+	.voice-icon{
+		width: 36upx;
+		height: 36upx;
+		padding: 16upx 20upx 16upx 0;
+		position: absolute;
+		left: 16upx;
+		top: -2upx;
+		z-index: 10;
+	}
+	
+	.search{
+		width: 640upx;
+		margin: 30upx auto 0;
+		position: relative;
+		input{
+			background-color: #F7F7F7;
+			padding: 10upx 74upx;
+			font-size: 28upx;
+			border-radius: 50upx;
+		}
+		
+	}
+	
+	
+	
+	.list-view {
+		width: 100%;
+		background: #fff;
+		box-sizing: border-box;
+	}
 
-    .uni-tab-bar {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        overflow: hidden;
-        height: 100%;
-    }
+	.list-cell {
+		padding: 30upx 32upx;
+		box-sizing: border-box;
+	}
 
-    .uni-tab-bar .list {
-        width: 750upx;
-        height: calc(100% - 70upx);
-        margin-top: 70upx;
-    }
+	.cell-title-box {
+		position: relative;
+	}
 
-    .uni-swiper-tab {
-        width: 100%;
-        white-space: nowrap;
-        line-height: 70upx;
-        height: 70upx;
-        /* border-bottom: 1px solid #c8c7cc; */
-        position: fixed;
-        background: #FFFFFF;
-        z-index: 999;
-        top: var(--window-top);
-        left: 0;
-    }
+	.min {
+		min-height: 90upx
+	}
 
-    .swiper-tab-list {
-        font-size: 30upx;
-        width: 150upx;
-        display: inline-block;
-        text-align: center;
-        color: #555;
-    }
+	.cell-title {
+		padding-right: 172upx;
+		font-size: 36upx;
+		line-height: 56upx;
+		word-break: break-all;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+	}
 
-    .uni-tab-bar .active {
-        color: #007AFF;
-    }
+	.pdr0 {
+		padding-right: 0 !important;
+	}
 
-    .uni-tab-bar .swiper-box {
-        flex: 1;
-        width: 100%;
-        height: calc(100% -70upx);
-        overflow: scroll;
-    }
+	.img {
+		position: absolute;
+		right: 0;
+		top: 6upx;
+		width: 146upx;
+		height: 146upx;
+		border-radius: 4upx;
+	}
 
-    .uni-tab-bar-loading {
-        text-align: center;
-        padding: 20upx 0;
-        font-size: 14px;
-        color: #CCCCCC;
-    }
+	.sub-title {
+		padding-top: 24upx;
+		font-size: 28upx;
+		color: #BCBCBC;
+		display: flex;
+		align-items: center
+	}
+
+	.tag {
+		padding: 5upx 10upx;
+		font-size: 24upx;
+		border-radius: 4upx;
+		margin-right: 20upx;
+	}
+
+	.b-red {
+		background: #FCEBEF;
+		color: #8A5966;
+	}
+
+	.b-blue {
+		background: #ECF6FD;
+		color: #4DABEB;
+	}
+
+	.b-orange {
+		background: #FEF5EB;
+		color: #FAA851
+	}
+
+	.b-green {
+		background: #E8F6E8;
+		color: #44CF85
+	}
 </style>

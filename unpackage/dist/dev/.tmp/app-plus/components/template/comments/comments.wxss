@@ -1,0 +1,18 @@
+
+.uni-comment-list {
+
+    /*    background:rgba(0,0,0,0.1);
+padding:0 10upx; */
+}
+.uni-comment-body {
+    background: rgb(240, 240, 240);
+    padding: 0 10rpx;
+}
+.uni-comment-face {
+    background: #FFFFFF;
+}
+.uni-comment-content {
+    /*    background: #EEEEEE;
+padding:0 10upx; */
+}
+

@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/news/publish",
+    "pages/news/list",
+    "pages/news/detail",
+    "pages/index/index"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7a7e83",
+    "selectedColor": "#0faeff",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/news/publish",
+        "text": "日记",
+        "iconPath": "static/img/fabu.png",
+        "selectedIconPath": "static/img/fabuHL.png"
+      },
+      {
+        "pagePath": "pages/news/list",
+        "text": "发现",
+        "iconPath": "static/img/faxian.png",
+        "selectedIconPath": "static/img/faxianHL.png"
+      }
+    ]
+  },
+  "nvueCompiler": "uni-app",
+  "renderer": "auto",
+  "splashscreen": {
+    "alwaysShowBeforeRender": true,
+    "autoclose": false
+  },
+  "appname": "app发布新闻，添加图片，图片批量压缩，新闻列表，新示例",
+  "compilerVersion": "2.4.2",
+  "usingComponents": {}
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "日记详情",
+  "usingComponents": {
+    "comments": "/components/template/comments/comments"
+  }
+}

@@ -1,0 +1,28 @@
+
+.set-capital.data-v-b465795c {
+    text-align: center;
+    line-height: 30px;
+    height: 30px;
+    padding: 0 5px;
+    right: 0;
+    /* width: 30px; */
+    background: #1AAD19;
+    color: #FFFFFF;
+    position: absolute;
+    bottom: 0px;
+    font-size: 12px;
+}
+.close-view.data-v-b465795c {
+    text-align: center;
+    line-height: 14px;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #FF5053;
+    color: #FFFFFF;
+    position: absolute;
+    top: -6px;
+    right: -4px;
+    font-size: 12px;
+}
+
