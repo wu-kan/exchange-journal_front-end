@@ -60,6 +60,65 @@
 
 - 后端部分代码地址：<https://github.com/wu-kan/exchange-journal_front-end/>
 
+最初前后端交互想采用 python-grpc / grpc-web, 但是 grpc-web 有一些问题, 所以最后转移到了 Python 实现 http 服务器的方式.
+
+目前的后端是这样实现的:
+- 打开 server socket
+- 接收一个连接请求
+- 将新创建的 client socket 传给子线程
+- 解析 http 请求包格式
+- 从 url 解析调用的方法和参数
+- 与 mysql 数据库进行交互
+- 以 json 形式返回响应结果
+
+```python
+class HTTPServer(object):
+    def __init__(self):
+        pass
+
+    def start(self):
+        pass
+
+    def handle_client(self, client_socket):
+        pass
+
+    def bind(self, port):
+        pass
+```
+
+实现的接口的 rpc 描述为
+```rpc
+service MyDiary {
+  // 获取自己或对方的文章数
+  rpc GetPostNum(UserIDT) returns (PostNum) {}
+
+  // 获取自己或对方的文章
+  rpc GetPost(PostIDT) returns (Post) {}
+
+  // 获取自己或对方的全部文章 ID
+  rpc GetPostIDs(UserIDT) returns (stream PostID) {}
+  
+  // 获取对方的 ID
+  rpc RequestPair(Token) returns (UserID) {}
+
+  // 进行配对 TOOD
+  rpc WantPair(Token) returns (Result) {}
+
+  // 破坏配对 TODO
+  rpc BreakPair(Token) returns (Result) {}
+
+  // 
+  rpc Login(LoginInfo) returns (Token) {}
+
+  rpc UpdatePost(PostT) returns (PostID) {}
+}
+```
+
+另外, 登陆机制的实现为:
+- 用户登陆时, 服务器会产生一个随机的 token
+- 用户随后使用这个 token 与服务器进行交互
+- 服务器会在用户重新登陆后刷新这个 token, 服务器此外会定时刷新 token
+
 ## 项目结果
 
 ## 项目总结
