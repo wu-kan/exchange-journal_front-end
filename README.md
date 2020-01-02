@@ -1,5 +1,23 @@
 # exchange-journal_front-end
 
+## 实验目的
+
+## 实验内容
+
+## 实验方案
+
+## 实验结果
+
+## 实验总结
+
+## 参考文献
+
+
+
+
+
+
+
 数据库期末Porject，交换日记前端部分。使用[uni-app框架](https://uniapp.dcloud.io/)，一次编写，多平台运行。
 
 - 前端部分代码地址：<https://github.com/wu-kan/exchange-journal_front-end>
