@@ -1,65 +1,62 @@
 {
-    "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-        {
-            "path": "pages/news/publish",
-            "style": {
-                "navigationBarTitleText": "写日记"
-            }
-        }, {
-            "path": "pages/news/list",
-            "style": {
-                "navigationBarTitleText": "发现"
-            }
-        }, {
-            "path": "pages/news/detail",
-            "style": {
-                "navigationBarTitleText": "日记详情"
-            }
-        },  {
-            "path": "pages/index/index",
-            "style": {
-                "navigationBarTitleText": "uni-app"
-            }
-        }, {
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/bottom-nav/publish",
+			"style": {
+				"navigationBarTitleText": "写日记"
+			}
+		}, {
+			"path": "pages/bottom-nav/find",
+			"style": {
+				"navigationBarTitleText": "发现"
+			}
+		}, {
+			"path": "pages/news/detail",
+			"style": {
+				"navigationBarTitleText": "日记详情"
+			}
+		}, {
 			"path": "pages/login/login",
 			"style": {
-			    "navigationBarTitleText": "登录"
+				"navigationBarTitleText": "登录"
 			}
-		},{
+		}, {
 			"path": "pages/login/register",
 			"style": {
-			    "navigationBarTitleText": "注册"
+				"navigationBarTitleText": "注册"
+			}
+		}, {
+			"path": "pages/bottom-nav/person/person",
+			"style": {
+				"navigationBarTitleText": "我的"
 			}
 		}
-    ],
-    "globalStyle": {
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "uni-app",
-        "navigationBarBackgroundColor": "#F8F8F8",
-        "backgroundColor": "#F8F8F8"
-    },"tabBar": {
-        "color": "#7a7e83",
-        "selectedColor": "#0faeff",
-        "backgroundColor": "#ffffff",
-        "list": [{
-            "pagePath": "pages/news/list",
-            "text": "发现",
-            "iconPath": "static/img/faxian.png",
-            "selectedIconPath": "static/img/faxianHL.png"
-        },{
-            "pagePath": "pages/news/publish",
-            "text": "日记",
-            "iconPath": "static/img/fabu.png",
-            "selectedIconPath": "static/img/fabuHL.png"
-        },
-		{
-		    "pagePath": "pages/news/detail",
-		    "text": "我的",
-		    "iconPath": "static/img/my.png",
-		    "selectedIconPath": "static/img/myHL.png"
-		}
-		
-		
-		]
-    }
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7a7e83",
+		"selectedColor": "#0faeff",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/bottom-nav/find",
+			"text": "发现",
+			"iconPath": "static/img/faxian.png",
+			"selectedIconPath": "static/img/faxianHL.png"
+		}, {
+			"pagePath": "pages/bottom-nav/publish",
+			"text": "日记",
+			"iconPath": "static/img/fabu.png",
+			"selectedIconPath": "static/img/fabuHL.png"
+		}, {
+			"pagePath": "pages/bottom-nav/person/person",
+			"text": "我的",
+			"iconPath": "static/img/my.png",
+			"selectedIconPath": "static/img/myHL.png"
+		}]
+	}
 }
