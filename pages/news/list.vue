@@ -7,7 +7,7 @@
 			<input maxlength="20" focus type="text" value="" confirm-type="search" @confirm="get_diary" placeholder="输入关键字" v-model.trim="searchText"/>
 			<image src="../../static/zy-search/search.svg" mode="aspectFit" @click="getname_link()" class="search-icon"></image>
 		</view>
-		{{straghtline}}
+		
 		<view class="list-view">
 			<view v-for="(item,index) in newsList" :key="index" class="list-cell list-item" :class="[(newsList.length-1)==index?'last':'']"
 			 hover-class="hover" :hover-stay-time="150" @tap="detail">
