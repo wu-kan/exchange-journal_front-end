@@ -1,13 +1,13 @@
 <template>
 	<view class="container">
-		
+		<navigator url="./detail" hover-class="none" class="zai-label">ta</navigator>
 		
 		<view class="search">
 			<!--<image src="../../static/zy-search/voice.svg" mode="aspectFit" @click="startRecognize()" class="voice-icon"></image> -->
 			<input maxlength="20" focus type="text" value="" confirm-type="search" @confirm="get_diary" placeholder="输入关键字" v-model.trim="searchText"/>
 			<image src="../../static/zy-search/search.svg" mode="aspectFit" @click="getname_link()" class="search-icon"></image>
 		</view>
-		
+		<view>{{straghtline}}</view>
 		<view class="list-view">
 			<view v-for="(item,index) in newsList" :key="index" class="list-cell list-item" :class="[(newsList.length-1)==index?'last':'']"
 			 hover-class="hover" :hover-stay-time="150" @tap="detail">
@@ -133,10 +133,10 @@
 				})
 			},
 			getLabelText: function(label) {
-				return ["", "要闻", "朋友都看过", "本地资讯", "互联网精英看过"][label];
+				
 			},
 			getLabelCss: function(label) {
-				return ["", "b-red", "b-blue", "b-orange", "b-green"][label];
+				
 			},
 			
 			get_diary: function(label){
@@ -292,5 +292,12 @@
 	.b-green {
 		background: #E8F6E8;
 		color: #44CF85
+	}
+	
+	.zai-label{
+		padding: 60upx 0;
+		text-align: center;
+		font-size: 50upx;
+		color: #8A6DE9;
 	}
 </style>

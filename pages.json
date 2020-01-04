@@ -11,9 +11,9 @@
 				"navigationBarTitleText": "发现"
 			}
 		}, {
-			"path": "pages/news/detail",
+			"path": "pages/bottom-nav/detail",
 			"style": {
-				"navigationBarTitleText": "日记详情"
+				"navigationBarTitleText": "ta的日记"
 			}
 		}, {
 			"path": "pages/login/login",
